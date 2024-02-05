@@ -1,0 +1,160 @@
+version: "3.3"
+
+services:
+
+  api:
+    build:
+      context: .
+    container_name: mainapi
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      NODE_ID: 'node-api'
+      SERVICES: api
+      PORT: 3030
+    depends_on:
+      - nats
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=api"
+      - "traefik.http.routers.api.entrypoints=http"
+      - "traefik.http.routers.api-gw.rule=PathPrefix(`/`)"
+      - "traefik.http.services.api-gw.loadbalancer.server.port=3030"
+
+  emp_advert:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: employer_advertisement
+    depends_on:
+      - nats
+
+  emp_application:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: employer_application
+    depends_on:
+      - nats
+
+  emp_profile:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: employer_profile
+    depends_on:
+      - nats
+
+  job:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job
+    depends_on:
+      - nats
+
+  job_application:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job_application
+    depends_on:
+      - nats
+
+  job_application_cover_letter:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job_application_cover_letter
+    depends_on:
+      - nats
+
+  job_application_form:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job_application_form
+    depends_on:
+      - nats
+
+  job_application_recommendation_letter:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job_application_recommendation_letter
+    depends_on:
+      - nats
+
+  job_application_resume:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: job_application_resume
+    depends_on:
+      - nats
+
+  stud_profile:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: student_profile
+    depends_on:
+      - nats
+
+  user_auth:
+    build:
+      context: .
+    image: backends
+    env_file: docker-compose.env
+    environment:
+      SERVICES: users
+    depends_on:
+      - nats
+
+  nats:
+    image: nats
+    ports:
+      - "4222:4222"
+    restart: unless-stopped
+
+  mongo:
+    image: mongo
+    volumes:
+      - ./db:/data/db
+
+  traefik:
+    image: traefik:v2.1
+    restart: unless-stopped
+    command: 
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--api=true"
+      - "--api.dashboard=true"
+      - "--accesslog=true"
+      - "--log=true"
+      - "--log.level=info"
+    ports:
+      - "3030:80"
+      - "3031:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro

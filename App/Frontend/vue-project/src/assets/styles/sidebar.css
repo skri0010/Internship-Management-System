@@ -1,0 +1,38 @@
+/**
+ * CSS for SideBar.vue
+ * 
+ * @author Joshua Ee <jeee0002@student.monash.edu>
+ * Reference: 
+ *            
+ *            
+ * 
+ * Created at     : 2022-10-12 10:00
+ * Last modified  : 2022-10-13 00:00 
+ */
+
+.PDPA { 
+    font-size: 15px;
+    /* font-family: "Times New Roman", Times, serif; */
+}
+
+.PDPA:link {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.PDPA:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.PDPA:hover {
+    color: white;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.PDPA:active {
+    background-color: transparent;
+    text-decoration: underline;
+}

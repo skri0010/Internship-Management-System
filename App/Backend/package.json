@@ -1,0 +1,62 @@
+{
+  "name": "internship_management_system",
+  "version": "1.0.0",
+  "description": "This is the backend server for Internship Management System of FIT3170 by Monash University Malaysia implementing Microservices Architecture.",
+  "scripts": {
+    "dev": "moleculer-runner --repl --env --hot services/**/*.service.js",
+    "start": "moleculer-runner --env services/**/*.service.js",
+    "cli": "moleculer connect NATS",
+    "ci": "jest --watch",
+    "test": "jest --coverage --setupFiles=dotenv/config",
+    "dc:up": "docker-compose up --build -d",
+    "dc:logs": "docker-compose logs -f",
+    "dc:down": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AeroG81/FIT3170_Internship_Management_System.git"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.1.0",
+    "jest-cli": "^27.1.0",
+    "moleculer-repl": "^0.6.6"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cookies": "^0.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "google-auth-library": "^8.0.2",
+    "googleapis": "^108.0.0",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "moleculer": "^0.14.16",
+    "moleculer-db": "^0.8.17",
+    "moleculer-db-adapter-mongo": "^0.4.13",
+    "moleculer-db-adapter-mongoose": "^0.8.12",
+    "moleculer-mail": "^1.2.5",
+    "moleculer-web": "^0.10.4",
+    "mongoose": "^5.13.15",
+    "mongoose-unique-validator": "^2.0.3",
+    "multer": "^1.4.5-lts.1",
+    "nats": "^2.2.0"
+  },
+  "engines": {
+    "node": ">= 12.x.x"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./services",
+    "roots": [
+      "../test"
+    ]
+  }
+}

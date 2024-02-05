@@ -1,0 +1,31 @@
+
+name: Docker Compose Actions Workflow
+on: 
+  push:
+    branches: [ release, Pre-release, wpan ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the stack
+        run: docker-compose -f ./App/Backend/docker-compose.yml -p internshipmanagement up -d
+      - name: List docker container & docker node
+        run: |
+          docker container ls
+          docker image ls
+      # - name: Run backend testing
+      #   run: |
+      #     npm install --include=dev
+      #     npm run test
+        working-directory: ./App/Backend
+      - name: Run frontend testing
+        run: |
+          npm install --include
+          npm run build
+        working-directory: ./App/Frontend/vue-project
+      - name: Test application services
+        run: |
+          export HOSTNAME=127.0.0.1:3030
+          curl http://$HOSTNAME/admin/app
+        
